@@ -1,0 +1,21 @@
+{
+  "name": "fullstack-mern-app",
+  "version": "1.0.0",
+  "description": "A MERN stack application with comprehensive testing setup",
+  "scripts": {
+    "test": "npm run test:server && npm run test:client",
+    "test:server": "cd server && npm test",
+    "test:client": "cd client && npm test -- --watchAll=false",
+    "test:watch": "concurrently \"npm run test:server -- --watch\" \"npm run test:client -- --watch\"",
+    "test:coverage": "npm run test:server -- --coverage && npm run test:client -- --coverage --watchAll=false",
+    "install:server": "cd server && npm install",
+    "install:client": "cd client && npm install",
+    "install:all": "npm run install:server && npm run install:client"
+  },
+  "keywords": ["mern", "mongodb", "express", "react", "nodejs", "fullstack"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
