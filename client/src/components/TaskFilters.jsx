@@ -23,7 +23,7 @@ const TaskFilters = ({ filters, onFilterChange }) => {
         <select
           value={filters.status || ''}
           onChange={(e) => handleFilterChange('status', e.target.value)}
-          className="px-3 py-2 text-sm border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="px-4 py-3 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
         >
           <option value="">All Status</option>
           <option value="pending">Pending</option>
@@ -37,7 +37,7 @@ const TaskFilters = ({ filters, onFilterChange }) => {
         <select
           value={filters.priority || ''}
           onChange={(e) => handleFilterChange('priority', e.target.value)}
-          className="px-3 py-2 text-sm border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="px-4 py-3 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
         >
           <option value="">All Priority</option>
           <option value="high">High</option>
@@ -51,7 +51,7 @@ const TaskFilters = ({ filters, onFilterChange }) => {
         <select
           value={filters.sort || '-createdAt'}
           onChange={(e) => handleFilterChange('sort', e.target.value)}
-          className="px-3 py-2 text-sm border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="px-4 py-3 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
         >
           <option value="-createdAt">Newest First</option>
           <option value="createdAt">Oldest First</option>
@@ -67,9 +67,9 @@ const TaskFilters = ({ filters, onFilterChange }) => {
       {hasActiveFilters && (
         <button
           onClick={handleResetFilters}
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="inline-flex items-center px-4 py-3 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:shadow-sm"
         >
-          <RotateCcw className="h-4 w-4 mr-1" />
+          <RotateCcw className="h-4 w-4 mr-2" />
           Reset
         </button>
       )}
