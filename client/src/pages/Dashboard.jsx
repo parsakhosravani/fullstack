@@ -7,7 +7,7 @@ import TaskFilters from '../components/TaskFilters';
 import TaskStats from '../components/TaskStats';
 import Modal from '../components/Modal';
 import Toast from '../components/Toast';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, Sparkles, Target, Calendar, TrendingUp } from 'lucide-react';
 
 const Dashboard = () => {
   const {
@@ -40,7 +40,7 @@ const Dashboard = () => {
     const result = await createTask(taskData);
     if (result.success) {
       setShowTaskForm(false);
-      setToast({ type: 'success', message: 'Task created successfully!' });
+      setToast({ type: 'success', message: '✨ Task created successfully!' });
       fetchTaskStats(); // Refresh stats
     } else {
       setToast({ type: 'error', message: result.error });
@@ -52,7 +52,7 @@ const Dashboard = () => {
     if (result.success) {
       setEditingTask(null);
       setShowTaskForm(false);
-      setToast({ type: 'success', message: 'Task updated successfully!' });
+      setToast({ type: 'success', message: '🎉 Task updated successfully!' });
       fetchTaskStats(); // Refresh stats
     } else {
       setToast({ type: 'error', message: result.error });
@@ -63,7 +63,7 @@ const Dashboard = () => {
     if (window.confirm('Are you sure you want to delete this task?')) {
       const result = await deleteTask(taskId);
       if (result.success) {
-        setToast({ type: 'success', message: 'Task deleted successfully!' });
+        setToast({ type: 'success', message: '🗑️ Task deleted successfully!' });
         fetchTaskStats(); // Refresh stats
       } else {
         setToast({ type: 'error', message: result.error });
@@ -98,17 +98,21 @@ const Dashboard = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen">
         <Navbar />
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <div className="text-center">
-              <p className="text-red-600">Error: {error}</p>
+            <div className="text-center bg-red-50 border border-red-200 rounded-2xl p-8">
+              <div className="p-3 bg-red-100 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Target className="h-8 w-8 text-red-600" />
+              </div>
+              <h3 className="text-lg font-semibold text-red-800 mb-2">Oops! Something went wrong</h3>
+              <p className="text-red-600 mb-4">{error}</p>
               <button
                 onClick={() => fetchTasks()}
-                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                className="btn-primary"
               >
-                Retry
+                Try Again
               </button>
             </div>
           </div>
@@ -118,100 +122,145 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Navbar />
       
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="px-4 py-6 sm:px-0">
           {/* Header */}
-          <div className="md:flex md:items-center md:justify-between mb-6">
+          <div className="md:flex md:items-center md:justify-between mb-8">
             <div className="flex-1 min-w-0">
-              <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                Task Dashboard
-              </h2>
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl shadow-lg">
+                  <Target className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-purple-800 to-pink-800 bg-clip-text text-transparent">
+                    Task Dashboard
+                  </h2>
+                  <p className="text-gray-600 mt-1">Organize your work and achieve your goals</p>
+                </div>
+              </div>
             </div>
-            <div className="mt-4 flex md:mt-0 md:ml-4">
+            <div className="mt-6 flex md:mt-0 md:ml-4">
               <button
                 onClick={() => setShowTaskForm(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="btn-primary flex items-center space-x-2"
               >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Task
+                <Plus className="h-4 w-4" />
+                <span>Add Task</span>
+                <Sparkles className="h-4 w-4" />
               </button>
             </div>
           </div>
 
           {/* Stats */}
-          {stats && <TaskStats stats={stats} />}
+          {stats && (
+            <div className="mb-8">
+              <div className="flex items-center space-x-2 mb-4">
+                <TrendingUp className="h-5 w-5 text-blue-600" />
+                <h3 className="text-lg font-semibold text-gray-800">Your Progress</h3>
+              </div>
+              <TaskStats stats={stats} />
+            </div>
+          )}
 
           {/* Search and Filters */}
-          <div className="mb-6 flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search tasks..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          <div className="mb-8 space-y-4">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search your tasks..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="form-input pl-12 w-full"
+                  />
+                </div>
+              </div>
+              <div>
+                <TaskFilters
+                  filters={filters}
+                  onFilterChange={handleFilterChange}
                 />
               </div>
             </div>
-            <TaskFilters
-              filters={filters}
-              onFilterChange={handleFilterChange}
-            />
           </div>
 
           {/* Tasks Grid */}
           {loading && tasks.length === 0 ? (
             <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading your tasks...</p>
+              </div>
             </div>
           ) : (
             <>
               {filteredTasks.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-gray-500 text-lg">
-                    {searchTerm ? 'No tasks found matching your search.' : 'No tasks found. Create your first task!'}
-                  </p>
-                  {!searchTerm && (
-                    <button
-                      onClick={() => setShowTaskForm(true)}
-                      className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create Task
-                    </button>
-                  )}
+                <div className="text-center py-16">
+                  <div className="card max-w-md mx-auto p-8">
+                    <div className="p-4 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                      <Calendar className="h-10 w-10 text-blue-600" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                      {searchTerm ? 'No matching tasks found' : 'Ready to get organized?'}
+                    </h3>
+                    <p className="text-gray-600 mb-6">
+                      {searchTerm 
+                        ? 'Try adjusting your search terms or filters.' 
+                        : 'Create your first task and start your productivity journey!'}
+                    </p>
+                    {!searchTerm && (
+                      <button
+                        onClick={() => setShowTaskForm(true)}
+                        className="btn-primary"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create Your First Task
+                      </button>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredTasks.map((task) => (
-                    <TaskCard
-                      key={task._id}
-                      task={task}
-                      onEdit={handleEditTask}
-                      onDelete={handleDeleteTask}
-                      onUpdate={updateTask}
-                    />
+                  {filteredTasks.map((task, index) => (
+                    <div 
+                      key={task._id} 
+                      className="animate-fadeInUp" 
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <TaskCard
+                        task={task}
+                        onEdit={handleEditTask}
+                        onDelete={handleDeleteTask}
+                        onUpdate={updateTask}
+                      />
+                    </div>
                   ))}
                 </div>
               )}
 
               {/* Load More Button */}
               {page < pages && (
-                <div className="text-center mt-8">
+                <div className="text-center mt-12">
                   <button
                     onClick={handleLoadMore}
                     disabled={loading}
-                    className="inline-flex items-center px-6 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
+                    className="btn-secondary"
                   >
                     {loading ? (
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-500 mr-2"></div>
-                    ) : null}
-                    Load More
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-500 border-t-transparent mr-2"></div>
+                        Loading...
+                      </>
+                    ) : (
+                      <>
+                        Load More Tasks
+                      </>
+                    )}
                   </button>
                 </div>
               )}
@@ -223,7 +272,7 @@ const Dashboard = () => {
       {/* Task Form Modal */}
       {showTaskForm && (
         <Modal
-          title={editingTask ? 'Edit Task' : 'Create Task'}
+          title={editingTask ? '✏️ Edit Task' : '➕ Create New Task'}
           onClose={handleCloseForm}
         >
           <TaskForm
