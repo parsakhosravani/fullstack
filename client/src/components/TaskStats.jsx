@@ -43,26 +43,28 @@ const TaskStats = ({ stats }) => {
   };
 
   return (
-    <div className="mb-8">
+    <div className="mb-10">
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mb-6">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mb-8">
         {statCards.map((stat, index) => {
           const Icon = stat.icon;
           return (
             <div
               key={index}
-              className={`${stat.bgColor} ${stat.borderColor} border rounded-lg p-4 hover:shadow-sm transition-shadow duration-200`}
+              className={`${stat.bgColor} ${stat.borderColor} border rounded-xl p-6 hover:shadow-lg hover:scale-105 transition-all duration-300 group`}
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">
+                  <p className="text-sm font-semibold text-gray-600 mb-1">
                     {stat.title}
                   </p>
-                  <p className="text-2xl font-semibold text-gray-900">
+                  <p className="text-3xl font-bold text-gray-900">
                     {stat.value}
                   </p>
                 </div>
-                <Icon className={`h-8 w-8 ${stat.color}`} />
+                <div className={`${stat.bgColor.replace('50', '100')} p-3 rounded-xl group-hover:scale-110 transition-transform duration-300`}>
+                  <Icon className={`h-6 w-6 ${stat.color}`} />
+                </div>
               </div>
             </div>
           );
@@ -71,23 +73,26 @@ const TaskStats = ({ stats }) => {
 
       {/* Completion Rate */}
       {stats.total > 0 && (
-        <div className="bg-white border border-gray-200 rounded-lg p-4">
-          <div className="flex items-center justify-between mb-2">
-            <h4 className="text-sm font-medium text-gray-700">
-              Completion Rate
+        <div className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="text-lg font-bold text-gray-800">
+              Completion Progress
             </h4>
-            <span className="text-sm font-semibold text-gray-900">
+            <span className="text-xl font-bold text-gray-900 bg-gray-50 px-3 py-1 rounded-full">
               {getCompletionRate()}%
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-gray-100 rounded-full h-4 overflow-hidden">
             <div
-              className="bg-green-600 h-2 rounded-full transition-all duration-300"
+              className="bg-gradient-to-r from-green-500 to-emerald-600 h-4 rounded-full transition-all duration-700 ease-out"
               style={{ width: `${getCompletionRate()}%` }}
             ></div>
           </div>
-          <p className="text-xs text-gray-500 mt-2">
-            {stats.completed} of {stats.total} tasks completed
+          <p className="text-sm text-gray-600 mt-3 flex items-center justify-between">
+            <span>{stats.completed} of {stats.total} tasks completed</span>
+            <span className="font-semibold">
+              {stats.total - stats.completed} remaining
+            </span>
           </p>
         </div>
       )}
